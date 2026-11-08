@@ -1,0 +1,12 @@
+[workspace]
+channels = ["conda-forge"]
+name = "docking"
+platforms = ["win-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+rdkit = ">=2026.3.5,<2027"
+meeko = ">=0.5.0,<0.6"
+openbabel = ">=3.2.1,<4"

@@ -1,0 +1,45 @@
+# Environment for the MD stage (P2/P3) of the OLP drug-target project.
+#
+# Everything here comes from conda-forge, so one environment provides the whole chain:
+#   ambertools  -> antechamber, sqm, tleap, parmchk2, cpptraj AND MCPB.py (the Mo-MPT site)
+#   gromacs     -> MD engine
+#   gmx_mmpbsa  -> MM-PBSA from GROMACS trajectories
+#   mdanalysis  -> trajectory analysis (RMSD/RMSF/Rg/SASA/PCA/FEL, H-bond occupancy)
+#
+# Install on the GPU server with:
+#     pixi install            # or: mamba env create -f pixi.toml
+#
+# NOTE on GROMACS and CUDA: the generic `gromacs` package is a CPU build. For GPU throughput pin a
+# CUDA build, e.g. `gromacs=*=nompi_cuda*` (the exact build string depends on the channel state),
+# or install GROMACS from source against the server's CUDA. Check with `gmx --version` that it
+# reports GPU support before launching production.
+#
+# NOTE on AmberTools: it is Linux-only. That is precisely why this stage cannot run on the local
+# Windows machine, and why the metal site is parameterised here rather than locally.
+
+[project]
+name = "olp-md"
+version = "0.1.0"
+description = "MD + MM-PBSA for the OLP drug-target docking candidates"
+channels = ["conda-forge"]
+platforms = ["linux-64"]
+
+[dependencies]
+python = "3.11.*"
+ambertools = ">=23.0"
+gromacs = ">=2023.0"
+gmx_mmpbsa = ">=1.5"
+mdanalysis = ">=2.6"
+parmed = ">=4.0"
+numpy = ">=1.26"
+pandas = ">=2.0"
+matplotlib = ">=3.8"
+scipy = ">=1.11"
+openbabel = ">=3.1"      # pose format conversion, same tool used in the docking stage
+
+[tasks]
+setup = "bash scripts/00_setup_server.sh"
+params = "bash scripts/01_param_all.sh"
+build = "bash scripts/02_build_system.sh"
+md = "bash scripts/03_run_md.sh"
+analysis = "bash scripts/04_analyse.sh"

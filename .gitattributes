@@ -1,0 +1,4 @@
+# Preserve every byte exactly as published. The release ships a SHA-256 manifest
+# (provenance/script_manifest.csv) computed over the original working files, so no
+# line-ending conversion may occur on add or checkout.
+* -text

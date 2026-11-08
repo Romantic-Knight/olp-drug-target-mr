@@ -1,0 +1,24 @@
+[workspace]
+channels = ["conda-forge"]
+name = "scrna"
+platforms = ["win-64"]
+version = "0.1.0"
+
+[tasks]
+
+[dependencies]
+python = "3.12.*"
+scanpy = ">=1.10,<2"
+leidenalg = ">=0.10"
+python-igraph = ">=0.11"
+scikit-image = "*"
+pip = "*"
+libgfortran5 = "*"
+# MKL 2026.1.0 (pulled in as the default win-64 BLAS) hard-crashes float
+# GEMM/LAPACK on this machine (native exception 0xc06d007f in np.matmul /
+# np.linalg.inv). Force the OpenBLAS backend instead.
+libblas = { version = "*", build = "*openblas" }
+liblapack = { version = "*", build = "*openblas" }
+
+[pypi-dependencies]
+liana = ">=1.8.0, <2"

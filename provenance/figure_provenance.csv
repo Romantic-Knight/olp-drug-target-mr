@@ -1,0 +1,68 @@
+figure,panel,content,drawing_code,input_file,input_producer
+Figure 1,A,Study-design schematic: druggable union to MR screen to tiering,fig1_parts.R -> render_design(),data/processed/targets/druggable_genes_final.csv,NOT RETAINED
+Figure 1,B,"Four-source druggable-gene Venn (Pharos, DGIdb, Finan et al., Open Targets)",fig1_parts.R -> render_venn(),data/processed/targets/druggable_genes_final.csv,NOT RETAINED
+Figure 1,C,"Druggable genes carrying a cis-eQTL instrument (5,801 of 9,261)",fig1_parts.R -> render_funnel(),data/processed/targets/druggable_genes_final.csv,NOT RETAINED
+Figure 1,C,"Druggable genes carrying a cis-eQTL instrument (5,801 of 9,261)",fig1_parts.R -> render_funnel(),data/processed/targets/eqtlgen_genes.csv,analysis/scripts/dump_eqtlgen_symbols.R
+Figure 1,C,"Druggable genes carrying a cis-eQTL instrument (5,801 of 9,261)",fig1_parts.R -> render_funnel(),data/processed/targets/druggable_x_eqtlgen.csv,NOT RETAINED
+Figure 1,D,"Manhattan plot, WIDE case definition (5,040 genes)",journal_fig2.R -> png_a  (re-scaled x axis in the plate script),results/tables/mr_olp_wide_results.csv,NOT RETAINED
+Figure 1,E,"Manhattan plot, INCLAVO case definition",journal_fig2.R -> png_b,results/tables/mr_olp_inclavo_results.csv,NOT RETAINED
+Figure 1,F,Volcano plot of the WIDE screen,journal_fig2.R -> vol,results/tables/mr_olp_wide_results.csv,NOT RETAINED
+Figure 2,A,Dual-cohort forest plot of the 22 WIDE Bonferroni-significant genes,build_supplementary_figures.R -> p1,results/tables/supplementary/suppl_table_02_wide_hits_mr_replication_coloc.csv,analysis/scripts/build_supplementary_tables.py
+Figure 2,B,Forest plot of the five tiered candidates,journal_fig3.R -> p,results/tables/final_target_evidence.csv,NOT RETAINED
+Figure 2,C,Multi-signal (SuSiE) vs single-signal (coloc.abf) PP.H4,journal_fig4.R -> pb,results/tables/coloc_olp_results.csv,analysis/scripts/run_coloc.R
+Figure 2,C,Multi-signal (SuSiE) vs single-signal (coloc.abf) PP.H4,journal_fig4.R -> pb,results/tables/susie_coloc_results.csv,analysis/scripts/run_susie_coloc.R
+Figure 2,D,"coloc.abf PP.H4 for the 22 WIDE hits, both case definitions",journal_fig4.R -> pa,results/tables/coloc_olp_results.csv,analysis/scripts/run_coloc.R
+Figure 2,D,"coloc.abf PP.H4 for the 22 WIDE hits, both case definitions",journal_fig4.R -> pa,results/tables/mr_olp_wide_results.csv,NOT RETAINED
+Figure 2,E,Full posterior decomposition across the 44 gene-definition runs,build_supplementary_figures.R -> p2,results/tables/supplementary/_retired/coloc_abf_susie_44runs.csv,analysis/scripts/build_supplementary_tables.py
+Figure 2,F,Bonferroni vs BH-FDR multiplicity sensitivity,build_supplementary_figures.R -> p3,results/tables/supplementary/suppl_table_01_full_mr_screen_5040.csv,analysis/scripts/build_supplementary_tables.py
+Figure 3,A,PheWAS of each candidate's top cis-eQTL across FinnGen R13 phenotypes,build_final_mr_figures.R -> phewas  (= journal_fig5.R -> pa),results/tables/phewas_olp_all.csv,NOT RETAINED
+Figure 3,B,Steiger directionality test,build_final_mr_figures.R -> steiger,results/tables/steiger_direction_test.csv,analysis/scripts/run_steiger_test.py
+Figure 3,C,SuSiE pleiotropy for the chr12 candidates,build_final_mr_figures.R -> susie,results/tables/susie_pleiotropy_results.csv,analysis/scripts/run_susie_pleiotropy.R
+Figure 3,D,PP.H4 matrix across the pleiotropy colocalisation grid,build_final_mr_figures.R -> heatmap,results/tables/pleiotropy_coloc_results.csv,analysis/scripts/run_pleiotropy_coloc.R
+Figure 4,A,Redocking all 22 pairs: previous vs re-scored affinity,fig_md_integrated.py (panel A block),results/tables/docking_redo_comparison.csv,analysis/scripts/compare_docking_redo.py
+Figure 4,B,Three-seed reproducibility and SO4 self-docking control,fig_md_integrated.py (panel B block),analysis/docking/redo/docking_redo_summary.json,analysis/scripts/redock.py
+Figure 4,B,Three-seed reproducibility and SO4 self-docking control,fig_md_integrated.py (panel B block),analysis/docking/redo/validation_so4.json,analysis/scripts/validate_docking.py
+Figure 4,C,"Drift, backbone RMSD, RMSF and SASA triad over 200 ns",fig_md_integrated.py (panel C block),results/tables/md_curves.npy,analysis/md/scripts/analyse_md_local.py
+Figure 4,C,"Drift, backbone RMSD, RMSF and SASA triad over 200 ns",fig_md_integrated.py (panel C block),results/tables/md_rmsf.csv,analysis/md/scripts/rmsf_sasa_md.py
+Figure 4,C,"Drift, backbone RMSD, RMSF and SASA triad over 200 ns",fig_md_integrated.py (panel C block),results/tables/md_sasa.csv,NOT RETAINED
+Figure 4,D,Cofactor effect on Spiperone drift (apo vs holo),fig_md_integrated.py (panel D block),results/tables/md_curves.npy,analysis/md/scripts/analyse_md_local.py
+Figure 4,E,Residue-contact hotspots,fig_md_integrated.py (panel E block),results/tables/md_residue_contacts.csv,analysis/md/scripts/interactions_md.py
+Figure 4,F,Drift versus conformational RMSD,fig_md_integrated.py (panel F block),results/tables/md_curves.npy,analysis/md/scripts/analyse_md_local.py
+Figure 4,G,Hydrogen bonds per frame,fig_md_integrated.py (panel G block),results/tables/md_hbonds.csv,analysis/md/scripts/interactions_md.py
+Figure 4,H,MM-GBSA binding free energy per replicate,fig_md_integrated.py (panel H block),results/tables/md_mmgbsa.csv,NOT RETAINED
+Figure 4,I,fpocket druggability of the two receptors,fig_md_integrated.py (panel I block),results/tables/fpocket_summary.json,NOT RETAINED
+Figure 5,A,"UMAP of the 46,478-cell atlas",scrna_erosion_gse211630.panel_A,data/processed/geo_GSE211630/scanpy/gse211630_olp_lognorm.h5ad,analysis/scripts/build_lognorm_allgenes_gse211630.py
+Figure 5,A,"UMAP of the 46,478-cell atlas",scrna_erosion_gse211630.panel_A,data/processed/geo_GSE211630/scanpy/gse211630_olp_obs_annotation.csv,analysis/scripts/scrna_annotate_gse211630.py
+Figure 5,B,Same embedding coloured by condition,scrna_erosion_gse211630.panel_B,same as A,
+Figure 5,C,Raw Leiden clusters c0-c20,scrna_suppfig5_umap_gse211630.panel_a,data/processed/geo_GSE211630/scanpy/gse211630_olp_lognorm.h5ad,analysis/scripts/build_lognorm_allgenes_gse211630.py
+Figure 5,D,Per-sample coverage on the shared embedding,scrna_suppfig5_umap_gse211630.panel_b,same as C,
+Figure 5,E,Per-sample cell-type composition at family level,scrna_plot_composition_tnk_gse211630.panel_composition_bars,results/tables/geo_gse211630_composition_per_sample.csv,analysis/scripts/scrna_composition_tnk_gse211630.py
+Figure 5,E,Per-sample cell-type composition at family level,scrna_plot_composition_tnk_gse211630.panel_composition_bars,results/tables/geo_gse211630_composition_shift.csv,analysis/scripts/scrna_composition_tnk_gse211630.py
+Figure 5,F,Lineage-marker dot plot (51 markers),scrna_suppfig7_marker_dotplot_gse211630.panel_dotplot + panel_coverage,data/processed/geo_GSE211630/ann/GSM648163{8..42}_filtered.h5ad,NOT RETAINED
+Figure 5,F,Lineage-marker dot plot (51 markers),scrna_suppfig7_marker_dotplot_gse211630.panel_dotplot + panel_coverage,data/processed/geo_GSE211630/scanpy/gse211630_olp_lognorm.h5ad,analysis/scripts/build_lognorm_allgenes_gse211630.py
+Figure 6,A-E,Expression of the five candidates on the UMAP embedding,"plot_scrna_candidates_gse211630.py -> panel_candidate_umap(ax, gene)",data/processed/geo_GSE211630/scanpy/gse211630_olp_lognorm.h5ad,analysis/scripts/build_lognorm_allgenes_gse211630.py
+Figure 6,A-E,Expression of the five candidates on the UMAP embedding,"plot_scrna_candidates_gse211630.py -> panel_candidate_umap(ax, gene)",results/tables/geo_gse211630_celltype_annotation.csv,analysis/scripts/scrna_annotate_gse211630.py
+Figure 6,F-J,Per-cell-type dotplots for the same five genes,scrna_erosion_gse211630.erosion_grid,results/tables/geo_gse211630_erosion_candidate_celltype.csv,analysis/scripts/scrna_erosion_gse211630.py
+Figure 6,F-J,Per-cell-type dotplots for the same five genes,scrna_erosion_gse211630.erosion_grid,results/tables/geo_gse211630_erosion_per_sample.csv,analysis/scripts/scrna_erosion_gse211630.py
+Figure 7,A,Target-message direction per cell subtype,build_final_sc_fig8.panel_A,results/tables/geo_gse211630_mr_backmap_gene.csv,analysis/scripts/scrna_mr_backmap_gse211630.py
+Figure 7,A,Target-message direction per cell subtype,build_final_sc_fig8.panel_A,results/tables/geo_gse211630_mr_backmap_subtype.csv,analysis/scripts/scrna_mr_backmap_gse211630.py
+Figure 7,B,Oaxaca decomposition of the tissue delta,build_final_sc_fig8.panel_B,same as A,
+Figure 7,C,Seven T/NK functional module scores,scrna_plot_composition_tnk_gse211630.panel_tnk_signature,results/tables/geo_gse211630_tnk_module_per_sample.csv,analysis/scripts/scrna_composition_tnk_gse211630.py
+Figure 7,C,Seven T/NK functional module scores,scrna_plot_composition_tnk_gse211630.panel_tnk_signature,results/tables/geo_gse211630_tnk_module_shift.csv,analysis/scripts/scrna_composition_tnk_gse211630.py
+Figure 7,D,Incoming focus signalling heatmap,build_final_sc_fig8.panel_C,results/tables/geo_gse211630_liana_incoming_focus.csv,analysis/scripts/scrna_liana_integrate_gse211630.py
+Figure 7,E,Sustained T/NK signalling shift,build_final_sc_fig8.panel_D,results/tables/geo_gse211630_liana_signal_shift.csv,analysis/scripts/scrna_liana_integrate_gse211630.py
+Figure 7,F,Ligand-level extremes of the sustained losses,build_final_sc_fig8.panel_E,results/tables/geo_gse211630_liana_signal_shift.csv,analysis/scripts/scrna_liana_integrate_gse211630.py
+Supplementary Figure 1,,A dataset provenance and per-cell QC; B QC metrics distribution; C clustering overview,scrna_suppfig5_dataset_qc_gse211630.py,results/tables/geo_gse211630_qc_summary.csv,analysis/scripts/plot_gse211630_qc.py
+Supplementary Figure 1,,A dataset provenance and per-cell QC; B QC metrics distribution; C clustering overview,scrna_suppfig5_dataset_qc_gse211630.py,data/processed/geo_GSE211630/qc_cell_metrics.csv.gz,NOT RETAINED
+Supplementary Figure 1,,A dataset provenance and per-cell QC; B QC metrics distribution; C clustering overview,scrna_suppfig5_dataset_qc_gse211630.py,data/processed/geo_GSE211630/preprocess_summary.json,NOT RETAINED
+Supplementary Figure 1,,A dataset provenance and per-cell QC; B QC metrics distribution; C clustering overview,scrna_suppfig5_dataset_qc_gse211630.py,data/processed/geo_GSE211630/scanpy/gse211630_all_analyzed.h5ad,analysis/scripts/scanpy_cluster_gse211630.py
+Supplementary Figure 2,,5 candidate genes x 2 case definitions of regional association plots,build_supplementary_figures.R -> p4,data/processed/coloc/coloc_eqtl_windows.csv,analysis/scripts/prepare_coloc_data.R
+Supplementary Figure 2,,5 candidate genes x 2 case definitions of regional association plots,build_supplementary_figures.R -> p4,data/processed/coloc/coloc_fg_wide.csv,analysis/scripts/prepare_coloc_data.R
+Supplementary Figure 2,,5 candidate genes x 2 case definitions of regional association plots,build_supplementary_figures.R -> p4,data/processed/coloc/coloc_fg_inclavo.csv,analysis/scripts/prepare_coloc_data.R
+Supplementary Figure 2,,5 candidate genes x 2 case definitions of regional association plots,build_supplementary_figures.R -> p4,data/processed/coloc/ld_1000g/<gene>_ld.csv.gz,NOT RETAINED
+Supplementary Figure 3,,A per-gene detection summary; B erosive composition shift,scrna_suppfig8_candidate_expression_gse211630.panel_C + scrna_plot_composition_tnk_gse211630.panel_subtype_dots,results/tables/geo_gse211630_candidate_celltype_enrichment.csv,analysis/scripts/scrna_annotate_gse211630.py
+Supplementary Figure 3,,A per-gene detection summary; B erosive composition shift,scrna_suppfig8_candidate_expression_gse211630.panel_C + scrna_plot_composition_tnk_gse211630.panel_subtype_dots,results/tables/geo_gse211630_composition_shift.csv,analysis/scripts/scrna_composition_tnk_gse211630.py
+Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-type UMAP facets,scrna_suppfig8_candidate_expression_gse211630.panel_A / panel_B,data/processed/geo_GSE211630/scanpy/gse211630_olp_lognorm.h5ad,analysis/scripts/build_lognorm_allgenes_gse211630.py
+Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-type UMAP facets,scrna_suppfig8_candidate_expression_gse211630.panel_A / panel_B,results/tables/geo_gse211630_celltype_annotation.csv,analysis/scripts/scrna_annotate_gse211630.py
+Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-type UMAP facets,scrna_suppfig8_candidate_expression_gse211630.panel_A / panel_B,results/tables/geo_gse211630_candidate_celltype_enrichment.csv,analysis/scripts/scrna_annotate_gse211630.py
+Supplementary Figure 4,,A candidate expression across 19 cell types; B per-cell-type UMAP facets,scrna_suppfig8_candidate_expression_gse211630.panel_A / panel_B,results/tables/geo_gse211630_candidate_loc.csv,analysis/scripts/plot_scrna_candidates_gse211630.py

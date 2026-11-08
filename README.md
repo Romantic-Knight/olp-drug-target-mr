@@ -170,3 +170,9 @@ The Python analysis used `scanpy`, `anndata`, `scipy`, `pandas`, `numpy`,
 Wei Han — Department of Oral and Maxillofacial Surgery, Nanjing Stomatological
 Hospital, Affiliated Hospital of Medical School, Research Institute of
 Stomatology, Nanjing University, Nanjing, China. doctorhanwei@hotmail.com
+
+## Licence
+
+MIT — see [`LICENSE`](LICENSE). The licence covers this analysis code. It does
+not extend to the third-party summary statistics or single-cell data analysed
+with it, which remain under their own terms.

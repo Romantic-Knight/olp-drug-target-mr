@@ -187,30 +187,9 @@ cd analysis/scrna && pixi run python ../../analysis/scripts/build_restructured_s
 
 ## Supplementary figures
 
-### Supplementary Figure 1 — `suppfig01_dataset_qc`
+### Supplementary Figure 1 — `suppfig01_regional_plots`
 
-**Output** `figures/supplementary_v2/suppfig01_dataset_qc.png` / `.pdf`, 180 x 240 mm
-
-**Panels** A dataset provenance and per-cell QC; B QC metrics distribution; C clustering overview
-
-**Built by** `analysis/scripts/build_restructured_sc_figures.py  (builder key: supp1)`
-
-```
-cd analysis/scrna && pixi run python ../../analysis/scripts/build_restructured_sc_figures.py supp1
-```
-
-**Panel objects** `scrna_suppfig5_dataset_qc_gse211630.py`
-
-| Input file |
-|---|
-| `results/tables/geo_gse211630_qc_summary.csv` |
-| `data/processed/geo_GSE211630/qc_cell_metrics.csv.gz` |
-| `data/processed/geo_GSE211630/preprocess_summary.json` |
-| `data/processed/geo_GSE211630/scanpy/gse211630_all_analyzed.h5ad` |
-
-### Supplementary Figure 2 — `suppfig02_regional_plots`
-
-**Output** `figures/supplementary_v2/suppfig02_regional_plots.png` / `.pdf`, 180 x 165 mm
+**Output** `figures/supplementary_v2/suppfig01_regional_plots.png` / `.pdf`, 180 x 165 mm
 
 **Panels** 5 candidate genes x 2 case definitions of regional association plots
 
@@ -230,9 +209,36 @@ save_supp("supp_fig04_regional_plots", p4, height_mm = 165)
 | `data/processed/coloc/ld_1000g/<gene>_ld.csv.gz` |
 
 This plate is the R object `p4`, written as `supp_fig04_regional_plots` and
-delivered under the name `suppfig02_regional_plots`. The delivered files are
+delivered under the name `suppfig01_regional_plots`. The delivered files are
 byte-identical to `figures/supplementary/supp_fig04_regional_plots.{png,pdf}`
 (MD5 verified), so the mapping is confirmed by hash and not merely asserted.
+
+### Supplementary Figure 2 — `suppfig02_dataset_qc`
+
+**Output** `figures/supplementary_v2/suppfig02_dataset_qc.png` / `.pdf`, 180 x 240 mm
+
+**Panels** A dataset provenance and per-cell QC; B QC metrics distribution; C clustering overview
+
+**Built by** `analysis/scripts/build_restructured_sc_figures.py  (builder key: supp1)`
+
+```
+cd analysis/scrna && pixi run python ../../analysis/scripts/build_restructured_sc_figures.py supp1
+```
+
+**Panel objects** `scrna_suppfig5_dataset_qc_gse211630.py`
+
+| Input file |
+|---|
+| `results/tables/geo_gse211630_qc_summary.csv` |
+| `data/processed/geo_GSE211630/qc_cell_metrics.csv.gz` |
+| `data/processed/geo_GSE211630/preprocess_summary.json` |
+| `data/processed/geo_GSE211630/scanpy/gse211630_all_analyzed.h5ad` |
+
+This plate is the builder's `supp1` output, written as `suppfig01_dataset_qc`
+and delivered as `suppfig02_dataset_qc`. Its companion
+`suppfig03_detection_composition` was written by the same builder run at the
+same timestamp, which is consistent with the two having been renumbered
+together.
 
 ### Supplementary Figure 3 — `suppfig03_detection_composition`
 
@@ -275,12 +281,11 @@ cd analysis/scrna && pixi run python ../../analysis/scripts/build_restructured_s
 | `results/tables/geo_gse211630_candidate_loc.csv` |
 
 The builder writes this plate under the stem `suppfig02_candidate_landscape`;
-it is delivered as `suppfig04_candidate_landscape`. Unlike Supplementary
-Figure 2, no byte-identical copy under the original stem survives in the
-repository, so this rename is recorded from the figure-renumbering step
-rather than re-verified by hash. Its companion `suppfig03_...` was written by
-the same builder run at the same timestamp, which is consistent with the two
-having been renamed together.
+it is delivered as `suppfig04_candidate_landscape`. No byte-identical copy
+under the original stem survives in the repository, so this rename is recorded
+from the figure-renumbering step rather than re-verified by hash. Its companion
+`suppfig03_...` was written by the same builder run at the same timestamp, which
+is consistent with the two having been renamed together.
 
 ## Input tables and the scripts that produce them
 

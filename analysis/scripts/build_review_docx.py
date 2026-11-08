@@ -47,7 +47,11 @@ CHECK_COLOR = RGBColor(0xC0, 0x39, 0x2B)  # red-ish for [check] flags
 # ----------------------------------------------------------------------------
 BODY = "Times New Roman"
 CJK = "Microsoft YaHei"
-MONO = "Consolas"
+# Inline `code` spans were previously set in Consolas, which made tokens such as
+# "expr_prop = 0.1" and "min_cells = 5" appear in a different typeface from the rest
+# of the text. The manuscript must read in one typeface, so the monospace slot now
+# resolves to the body face.
+MONO = BODY
 
 # ----------------------------------------------------------------------------
 # helpers
@@ -104,10 +108,13 @@ def _add_runs(p, text, size=11, bold=False, italic=False, color=None, font=BODY)
         if m.start() > pos:
             _emit(p, text[pos:m.start()], size, bold, italic, color, font)
         tok = m.group(0)
+        # '<sup>' is 5 characters and '</sup>' is 6, so the content spans [5:-6].
+        # The previous [6:-7] sliced one character too far and silently dropped the
+        # whole marker for one-character superscripts (every author affiliation number).
         if tok.startswith('<sup>'):
-            _emit(p, tok[6:-7], size, bold, italic, color, font, superscript=True)
+            _emit(p, tok[5:-6], size, bold, italic, color, font, superscript=True)
         elif tok.startswith('<sub>'):
-            _emit(p, tok[6:-7], size, bold, italic, color, font, subscript=True)
+            _emit(p, tok[5:-6], size, bold, italic, color, font, subscript=True)
         elif tok.startswith('`'):
             _emit(p, tok[1:-1], size, bold, italic, color, MONO)
         else:
@@ -226,9 +233,12 @@ def add_header_footer(doc, title_text):
     header = sec.header
     hp = header.paragraphs[0]
     hp.text = ""
-    r = hp.add_run(title_text)
-    set_run_font(r, BODY, 8.5, italic=True, color=RGBColor(0x66, 0x66, 0x66))
-    hp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    # A submission manuscript carries no running header. An empty title_text keeps the
+    # header band blank while leaving the footer page numbering intact.
+    if title_text:
+        r = hp.add_run(title_text)
+        set_run_font(r, BODY, 8.5, italic=True, color=RGBColor(0x66, 0x66, 0x66))
+        hp.alignment = WD_ALIGN_PARAGRAPH.CENTER
     # footer page numbers
     footer = sec.footer
     fp = footer.paragraphs[0]

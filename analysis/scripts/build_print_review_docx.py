@@ -67,12 +67,13 @@ OUT_REVIEW = os.path.join(REPORTS, "OLP_MR_figures_tables_review.docx")
 TITLE = ("From germline risk to lesional tissue: druggable-genome Mendelian randomization "
          "and single-cell profiling nominate GDF11 inhibition for oral lichen planus")
 
-AUTHORS_HTML = ("Wenguang Xu<sup>1</sup>, Wei Han<sup>1,*</sup>")
-AFFIL_HTML = ("<sup>1</sup> Department of Oral and Maxillofacial Surgery, Nanjing Stomatological "
-              "Hospital, Affiliated Hospital of Medical School, Research Institute of Stomatology, "
-              "Nanjing University, Nanjing, China.")
-CORRESP_HTML = ("*Correspondence:* Wei Han (same address; Tel/Fax: +86 25 8362 0140; "
-                "Email: doctorhanwei@hotmail.com)")
+AUTHORS_HTML = ("Yahui Lu<sup>1</sup>, Xiteng Yin<sup>1</sup>, Jianchuan Ran<sup>1</sup>, "
+                 "Wenguang Xu<sup>1</sup>, Yufeng Wang<sup>1</sup>, Wei Han<sup>1,*</sup>")
+AFFIL_HTML = ("<sup>1</sup> Nanjing Stomatological Hospital, Affiliated Hospital of Medical School, "
+              "Institute of Stomatology, Nanjing University, Nanjing 210008, China.")
+CORRESP_HTML = ("*Correspondence:* Wei Han, Nanjing Stomatological Hospital, Affiliated Hospital of "
+                "Medical School, Institute of Stomatology, Nanjing University, Nanjing 210008, China. "
+                "Email: doctorhanwei@nju.edu.cn")
 
 MAIN_FIG_MAP = {
     "Figure 1.": "fig01_design_screen.png",
@@ -84,8 +85,8 @@ MAIN_FIG_MAP = {
     "Figure 7.": "fig07_target_mapping.png",
 }
 SUPP_FIG_MAP = {
-    "Supplementary Figure 1.": "suppfig01_dataset_qc.png",
-    "Supplementary Figure 2.": "suppfig02_regional_plots.png",
+    "Supplementary Figure 1.": "suppfig01_regional_plots.png",
+    "Supplementary Figure 2.": "suppfig02_dataset_qc.png",
     "Supplementary Figure 3.": "suppfig03_detection_composition.png",
     "Supplementary Figure 4.": "suppfig04_candidate_landscape.png",
 }
@@ -294,7 +295,7 @@ def collect_checks(main_md_text):
 # Deliverable 1 - printable main text
 # =============================================================================
 def build_print():
-    doc = new_doc("OLP drug-target MR (FinnGen R13) - main text print copy")
+    doc = new_doc("")   # print copy of the manuscript: no running header
 
     # --- title block -----------------------------------------------------
     brv.add_heading(doc, TITLE, 1)

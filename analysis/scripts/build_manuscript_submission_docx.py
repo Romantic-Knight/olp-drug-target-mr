@@ -38,7 +38,9 @@ ROOT = brv.ROOT
 REPORTS = os.path.join(ROOT, "results", "reports")
 MAIN_MD = bpr.MAIN_MD
 OUT = os.path.join(REPORTS, "OLP_MR_manuscript_submission.docx")
-HEADER = "OLP drug-target Mendelian randomization (FinnGen R13) — manuscript"
+# A submission manuscript carries no running header (author decision, 2026-11-08):
+# an empty string keeps the header band blank.
+HEADER = ""
 
 VERIFIED_RE = re.compile(r"\s*\[verified.*?\]", flags=re.S)
 INTERNAL_PATHS = re.compile(r"`?(?:analysis/scripts|analysis/docking|results/reports)/[^`\s)]*`?")

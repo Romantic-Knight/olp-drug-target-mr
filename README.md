@@ -10,6 +10,11 @@ below with their accessions.
 
 - **[`FIGURE_PROVENANCE.md`](FIGURE_PROVENANCE.md)** — which script draws each
   figure, panel by panel, and which files it reads. Start here.
+  Supplementary figures are numbered in order of first citation in the
+  manuscript: Supplementary Figure 1 is the regional-association plate and
+  Supplementary Figure 2 the dataset-QC plate. The stems written by the
+  builders therefore differ from the delivered filenames in two places, and
+  the renaming is documented under each figure.
 - `analysis/` — the pipeline and the figure builders, in their original layout.
 - `env/` — the pixi environment specifications used for each analysis domain.
 - `provenance/` — machine-readable versions of the above
@@ -75,7 +80,7 @@ Nothing in this repository downloads or contains participant-level data.
 | Linkage-disequilibrium reference | 1000 Genomes Phase 3, European (GRCh37) |
 | Plasma pQTL | deCODE (Ferkingstad et al. 2021), INTERVAL (Sun et al. 2018), Knight ADRC |
 | Druggable-gene resources | Pharos, DGIdb, Finan et al. 2017, Open Targets |
-| Single-cell atlas | GEO **GSE211630** (buccal mucosa, 5 OLP libraries) |
+| Single-cell atlas | GEO **GSE211630** (buccal mucosa). Files used: GSM6481637 (normal), GSM6481638–GSM6481640 (non-erosive lesions), GSM6481641–GSM6481642 (erosive lesions) |
 | Docking structures | PDB **2A9A** (SUOX, chicken) and **5E4G** (GDF11) |
 | Docking ligands | DrugSig / PubChem, prepared as described in Methods 2.8 |
 
@@ -167,9 +172,12 @@ The Python analysis used `scanpy`, `anndata`, `scipy`, `pandas`, `numpy`,
 
 ## Contact
 
-Wei Han — Department of Oral and Maxillofacial Surgery, Nanjing Stomatological
-Hospital, Affiliated Hospital of Medical School, Research Institute of
-Stomatology, Nanjing University, Nanjing, China. doctorhanwei@hotmail.com
+All authors: Yahui Lu, Xiteng Yin, Jianchuan Ran, Wenguang Xu, Yufeng Wang,
+Wei Han.
+
+Corresponding author: Wei Han — Nanjing Stomatological Hospital, Affiliated
+Hospital of Medical School, Institute of Stomatology, Nanjing University,
+Nanjing 210008, China. doctorhanwei@nju.edu.cn
 
 ## Licence
 

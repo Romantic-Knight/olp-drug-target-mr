@@ -1,5 +1,9 @@
 # OLP drug-target Mendelian randomization — analysis code
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24052532.svg)](https://doi.org/10.5281/zenodo.24052532)
+
+Archived as `v1.0.0` at DOI **10.5281/zenodo.24052533**; the badge above resolves to the latest archived version.
+
 Code accompanying the manuscript *"From germline risk to lesional tissue:
 druggable-genome Mendelian randomization and single-cell profiling nominate
 GDF11 inhibition for oral lichen planus"*.

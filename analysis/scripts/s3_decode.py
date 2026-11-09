@@ -11,8 +11,13 @@ HOST = "s3-ext.decode.is"
 REGION = "us-east-1"
 SERVICE = "s3"
 BUCKET = "largescaleplasma-2023"
-ACCESS_KEY = "V1IQRNX6GFAH9RL9CF2J"
-SECRET_KEY = "17LeuimS93+l9bBkmrFftiZC9quEJ1HtzEf7/Bu2"
+# Credentials are read from the environment and are not stored in the repository.
+# The access key and secret that were previously hard-coded here were exposed in the
+# public commit history and have been revoked; do not replace them with literals.
+ACCESS_KEY = os.environ.get("DECODE_ACCESS_KEY", "")
+SECRET_KEY = os.environ.get("DECODE_SECRET_KEY", "")
+if not ACCESS_KEY or not SECRET_KEY:
+    sys.exit("DECODE_ACCESS_KEY and DECODE_SECRET_KEY must be set (see README).")
 EMPTY_SHA256 = hashlib.sha256(b"").hexdigest()
 
 

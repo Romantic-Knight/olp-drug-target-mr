@@ -28,8 +28,11 @@ analyze <- function(d, tag) {
   d <- d[!is.na(NrSamples)]
   cat("with NrSamples:", nrow(d), "\n")
 
-  # effect-allele frequency from FinnGen af_alt (af_alt = alt allele freq; align to eQTLGen effect allele)
-  d[, p_eff := fifelse(allele_state == "flip", 1 - af_alt, af_alt)]
+  # effect-allele frequency from FinnGen af_alt (af_alt = ALT allele freq); align to the
+  # eQTLGen effect allele: "same" means that allele is REF (p_eff = 1 - af_alt), "flip"
+  # means it is ALT (p_eff = af_alt). MAF below is min(p, 1-p), so it is unaffected by
+  # this convention; the correction makes the reported effect-allele frequency right.
+  d[, p_eff := fifelse(allele_state == "same", 1 - af_alt, af_alt)]
   d[, MAF := pmin(p_eff, 1 - p_eff)]
   # guard against extreme MAF -> unstable beta_exp
   d[MAF < 0.005, MAF := 0.005]

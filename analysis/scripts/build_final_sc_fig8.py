@@ -71,11 +71,14 @@ CMAP = matplotlib.colormaps["YlGnBu"]
 TN_FOCUS = {3, 4, 5, 6, 7, 8, 16}
 RECEIVERS = [16, 6, 1, 3, 8, 4, 7, 5, 0]
 
-badge = {"GDF11": "risk \u2191 OR 2.88", "SUOX": "risk \u2191 OR 1.23",
-         "EGFL8": "protective \u2193 OR 0.20", "TAPBP": "risk \u2191 OR 1.55",
-         "HLA-DPA1": "protective \u2193 OR 0.88"}
-badge_col = {"GDF11": "#505050", "SUOX": "#505050", "TAPBP": "#505050",
-             "EGFL8": "#2E6B4F", "HLA-DPA1": "#2E6B4F"}
+# WIDE odds ratios from the corrected allele alignment. Higher genetically predicted
+# expression goes with LOWER OLP risk for GDF11, SUOX and TAPBP, and with HIGHER risk
+# for EGFL8 and HLA-DPA1.
+badge = {"GDF11": "protective \u2193 OR 0.35", "SUOX": "protective \u2193 OR 0.81",
+         "EGFL8": "risk \u2191 OR 4.95", "TAPBP": "protective \u2193 OR 0.65",
+         "HLA-DPA1": "risk \u2191 OR 1.14"}
+badge_col = {"GDF11": "#2E6B4F", "SUOX": "#2E6B4F", "TAPBP": "#2E6B4F",
+             "EGFL8": "#505050", "HLA-DPA1": "#505050"}
 
 SHORT_D = {
     0:  "c0  Fib SFRP2+",

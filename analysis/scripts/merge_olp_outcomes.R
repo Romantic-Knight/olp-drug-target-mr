@@ -29,9 +29,13 @@ incl <- load_olp("data/raw/finngen_r13/finngen_R13_K11_ORAL_LICHEN_PLANUS_INCLAV
 merge_align <- function(olp) {
   m <- merge(top, olp, by = "snp", all.x = TRUE)
   # allele alignment: FinnGen beta is for alt allele; eQTLGen effect allele = effect_allele
+  # FinnGen `beta` is the effect of the ALT allele; the exposure effect is per the
+  # eQTLGen effect allele (AssessedAllele -> effect_allele). Therefore:
+  #   ref == effect_allele ("same") -> effect allele is REF -> beta_out = -beta
+  #   alt == effect_allele ("flip") -> effect allele is ALT -> beta_out = +beta
   m[, allele_state := fifelse(ref == effect_allele & alt == other_allele, "same",
                        fifelse(ref == other_allele & alt == effect_allele, "flip", "mismatch"))]
-  m[, beta_out := fifelse(allele_state == "flip", -beta, beta)]
+  m[, beta_out := fifelse(allele_state == "same", -beta, beta)]
   m[, se_out := sebeta]
   m[, pval_out := pval]
   m[allele_state == "mismatch", c("beta_out", "se_out", "pval_out", "af_alt") := NA]

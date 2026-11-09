@@ -41,7 +41,8 @@ for g in hits:
     r = recs[0]                       # single cis IV per gene
     z = float(r['zscore']); af = float(r['af_alt']) if r.get('af_alt') else float('nan')
     state = r.get('allele_state', '')
-    p_eff = (1 - af) if state == 'flip' else af
+    # effect allele is REF when state == 'same', ALT when state == 'flip'
+    p_eff = (1 - af) if state == 'same' else af
     maf = min(p_eff, 1 - p_eff)
     N = ns.get(g)
     if N is None or not (math.isfinite(af) and maf > 0):

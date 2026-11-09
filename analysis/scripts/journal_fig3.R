@@ -34,14 +34,18 @@ p <- ggplot(long, aes(x = or, y = lbl)) +
   # PP.H4 注释：右对齐放在面板右缘（x 取对数坐标上限内侧）
   geom_text(aes(x = max(long$hi) * 1.9 * 0.97, y = lbl, label = sprintf("PP.H4 %.2f", susie)),
             hjust = 1, size = 2.0, colour = "grey30", fontface = "italic") +
-  scale_x_log10(breaks = c(0.25, 0.5, 1, 2, 4, 8, 16, 32)) +
+  scale_x_log10(breaks = c(0.1, 0.25, 0.5, 1, 2, 4, 8, 16, 32)) +
   scale_colour_manual(values = tier_colours, name = "Final tier") +
   scale_shape_manual(values = c(WIDE = 19, INCLAVO = 1), name = "OLP cohort") +
-  coord_cartesian(xlim = c(0.12, max(long$hi) * 1.9), clip = "off") +
+  # the left limit was hard-coded at 0.12; take the range from the data so that
+  # estimates with a lower bound below it are not clipped
+  coord_cartesian(xlim = c(min(long$lo) * 0.85, max(long$hi) * 1.9), clip = "off") +
   labs(x = "MR Wald-ratio OR (eQTLGen cis-eQTL \u2192 FinnGen R13 OLP; log scale)",
        y = NULL,
        title = "Tiered candidate drug targets for oral lichen planus",
-       subtitle = "Single top cis-eQTL IV per gene; error bars = 95% CI; dashed line OR = 1; right column = coloc.susie PP.H4") +
+       subtitle = paste0("Single top cis-eQTL IV per gene; error bars = 95% CI; dashed line OR = 1; ",
+                         "OR < 1 = higher expression associated with lower risk; ",
+                         "right column = coloc.susie PP.H4")) +
   theme_journal(8) +
   theme(plot.margin = margin(6, 30, 6, 6))
 

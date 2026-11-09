@@ -163,8 +163,13 @@ def main():
         ev_row = mr[mr["gene"] == g].iloc[0]
         loc_row = loc[loc["gene"] == g].iloc[0]
 
-        mech = "composition_dominant" if abs(comp_t) >= abs(within_t) \
-            else "within_dominant"
+        # The dominant term is chosen across all three components. Comparing only
+        # |composition| with |within-cell-type| ignored the interaction term, which is
+        # the largest of the three for EGFL8, and mislabelled that gene.
+        _terms = {"composition_dominant": comp_t,
+                  "within_dominant": within_t,
+                  "interaction_dominant": inter_t}
+        mech = max(_terms, key=lambda k: abs(_terms[k]))
         pol = "up" if dM > 0 else ("down" if dM < 0 else "flat")
         consistency = (
             "consistent"

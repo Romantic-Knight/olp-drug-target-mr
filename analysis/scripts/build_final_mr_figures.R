@@ -141,7 +141,9 @@ heatmap <- render_heatmap()
 # 换行，并让 C 的底图例分两行。
 phewas <- phewas + labs(
   title = "PheWAS: all 5 candidate IVs are pleiotropic\nacross FinnGen R13 phenotypes",
-  subtitle = "dashed = genome-wide 5e-8; red diamond = OLP endpoint;\nusable phenotypes per IV: 415/308/392/298/310")
+  subtitle = paste0("dashed = genome-wide 5e-8; red diamond = OLP endpoint;\n",
+                    "same/opposite relative to each gene's own OLP effect;\n",
+                    "usable phenotypes per IV: 415/308/392/298/310"))
 # (B 的标题/副标题在下面重建 steiger 时一并设置：此处若赋值会被后续
 #  steiger <- ggplot(...) 覆盖，故 B 面板不能在这里定义标题。)
 
@@ -184,8 +186,8 @@ steiger <- ggplot(stw, aes(x = z_exp, y = z_out)) +
              size = 2.6, seed = 1, colour = "#C8102E") +
   scale_colour_manual(values = c(`TRUE` = "#9AA5B1", `FALSE` = "#C8102E"), guide = "none") +
   labs(x = "eQTLGen cis-eQTL Z (expression)", y = "FinnGen OLP WIDE MR Z (outcome)",
-       title = "Steiger direction test:\nexpression \u2192 OLP for all 5 candidates",
-       subtitle = "red = tiered candidate; all pass direction\n(expression \u2192 outcome)") +
+       title = "Steiger direction test:\nforward orientation for 4 of 5 candidates",
+       subtitle = "red = tiered candidate; EGFL8 forward but P = 0.082;\nGDF11 does not pass in INCLAVO (P = 0.72)") +
   theme_journal(8)
 
 fig5 <- ((phewas + labs(tag = "A")) | (steiger + labs(tag = "B"))) /

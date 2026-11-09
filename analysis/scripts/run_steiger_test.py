@@ -58,7 +58,9 @@ for g, rsid in IVS.items():
         zf2 = 0.5 * math.log((1 + r_out) / (1 - r_out))
         se_diff = math.sqrt(1 / (n_exp - 3) + 1 / (n_eff - 3))
         z_diff = (zf1 - zf2) / se_diff
-        p_steiger = 1 - math.erf(abs(z_diff) / math.sqrt(2))
+        # stable two-sided tail: 1 - erf() cancels catastrophically and stored exact
+        # zeros for very small P; erfc() is the same quantity without the cancellation
+        p_steiger = math.erfc(abs(z_diff) / math.sqrt(2))
         direction = "expression->outcome" if r_exp > r_out else "outcome->expression"
         rows.append({"gene": g, "iv": rsid, "pheno": pheno, "n_cases": cases,
                      "r_exp": r_exp, "r_out": r_out, "direction": direction,

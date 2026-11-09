@@ -118,8 +118,11 @@ def bh(p):
         return q
     pv = p[ok]
     o = np.argsort(pv)
-    q[ok] = np.minimum.accumulate((pv[o] * np.arange(1, len(pv) + 1) / len(pv))[::-1])[::-1][
-        np.argsort(o)]
+    # Benjamini-Hochberg: q_(i) = p_(i) * m / i, then enforce monotonicity.
+    # An earlier version used p * i / m, which is not an adjusted P value.
+    m = len(pv)
+    scaled = pv[o] * m / np.arange(1, m + 1)
+    q[ok] = np.minimum.accumulate(scaled[::-1])[::-1][np.argsort(o)]
     return q
 
 
@@ -153,8 +156,14 @@ for lvl in ("family", "subtype"):
         vn, ve = ne.frac.values, eo.frac.values
         # pooled cell-level Fisher (descriptive; cells are pseudoreplicates)
         n_cell_ne, n_cell_eo = int(ne.n_cells.sum()), int(eo.n_cells.sum())
+        # each 2x2 margin is that condition's own cell total, not the pooled total
+        n_tot_ne = int(comp_ps[(comp_ps.level == lvl) &
+                               (comp_ps.condition == "NEOLP")].n_cells.sum())
+        n_tot_eo = int(comp_ps[(comp_ps.level == lvl) &
+                               (comp_ps.condition == "EOLP")].n_cells.sum())
         fisher_p = stats.fisher_exact(
-            [[n_cell_ne, 46446 - n_cell_ne], [n_cell_eo, 46446 - n_cell_eo]])[1]
+            [[n_cell_ne, n_tot_ne - n_cell_ne],
+             [n_cell_eo, n_tot_eo - n_cell_eo]])[1]
         shift_rows.append({
             "level": lvl, "group": g,
             "cluster": st2cl.get(g, np.nan) if lvl == "subtype" else np.nan,

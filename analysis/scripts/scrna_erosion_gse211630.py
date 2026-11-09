@@ -126,8 +126,11 @@ def bh(pvals):
         return q
     pv = p[ok]
     o = np.argsort(pv)
-    q[ok] = np.minimum.accumulate((pv[o] * np.arange(1, len(pv) + 1) / len(pv))[::-1])[::-1] \
-        [np.argsort(o)]
+    # Benjamini-Hochberg: q_(i) = p_(i) * m / i, then enforce monotonicity.
+    # An earlier version used p * i / m, which is not an adjusted P value.
+    m = len(pv)
+    scaled = pv[o] * m / np.arange(1, m + 1)
+    q[ok] = np.minimum.accumulate(scaled[::-1])[::-1][np.argsort(o)]
     return q
 
 

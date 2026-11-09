@@ -240,7 +240,9 @@ for i, cx in enumerate(COMPLEXES):
             per_run.setdefault(row["run"], []).append(float(row["hbond_occ"]))
     vals = [np.sum(v) for v in per_run.values()]
     hb[i] = np.mean(vals) if vals else 0
-    hb_sd[i] = np.std(vals) if len(vals) > 1 else 0
+    # panels G and H are labelled "mean +/- s.d."; np.std defaults to ddof=0
+    # (population SD), which understates the sample SD by 0.82x at n = 3
+    hb_sd[i] = np.std(vals, ddof=1) if len(vals) > 1 else 0
 ax.bar(range(len(COMPLEXES)), hb, yerr=hb_sd, capsize=2.5,
        color=[COL[c] for c in COMPLEXES], edgecolor="white", lw=0.6, width=0.62)
 ax.set_xticks(range(len(COMPLEXES)))
@@ -256,7 +258,7 @@ ax = fig.add_subplot(gs[2, 1])
 mean, sdv = [], []
 for cx in COMPLEXES:
     v = [float(r["dG_bind_kcal"]) for r in mmgbsa if r["complex"] == cx]
-    mean.append(np.mean(v)); sdv.append(np.std(v) if len(v) > 1 else 0)
+    mean.append(np.mean(v)); sdv.append(np.std(v, ddof=1) if len(v) > 1 else 0)
 ypos = np.arange(len(COMPLEXES))[::-1]
 ax.barh(ypos, mean, xerr=sdv, capsize=2.5, color=[COL[c] for c in COMPLEXES],
         edgecolor="white", lw=0.6, height=0.60)

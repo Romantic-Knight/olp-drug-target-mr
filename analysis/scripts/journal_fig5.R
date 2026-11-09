@@ -11,14 +11,20 @@ d[, mlogp := -log10(pval)]
 d[, x := seq_len(.N), by = .(gene)]   # 文件顺序已按 category_index, phenocode 排
 
 # plot_class：OLP / GW same-dir / GW opp-dir / not GW
+# Direction is defined against THAT GENE'S OWN OLP effect, on the same allele basis
+# (FinnGen ALT). An earlier version tested `beta < 0` for every gene, which assumes all
+# five OLP effects are negative; they are not (GDF11 and SUOX are positive), so four of
+# the five panels were classified the wrong way round.
 olp_terms <- c("ORAL_LICHEN", "LICHEN_PLANUS")
 d[, is_olp := grepl(paste(olp_terms, collapse = "|"), phenocode, ignore.case = TRUE)]
+olp_ref <- d[is_olp == TRUE][order(pval)][, .SD[1], by = gene][, .(gene, beta_olp = beta)]
+d <- merge(d, olp_ref, by = "gene", all.x = TRUE)
+d[, dir_vs_olp := fifelse(is_olp, "olp",
+                     fifelse(sign(beta) == sign(beta_olp), "same", "opposite"))]
 d[is_olp == TRUE, plot_class := "OLP"]
-d[is.na(plot_class) & mlogp >= -log10(P_GW) & beta < 0, plot_class := "GW opp-dir"]
-d[is.na(plot_class) & mlogp >= -log10(P_GW) & beta >= 0, plot_class := "GW same-dir"]
+d[is.na(plot_class) & mlogp >= -log10(P_GW) & dir_vs_olp == "opposite", plot_class := "GW opp-dir"]
+d[is.na(plot_class) & mlogp >= -log10(P_GW) & dir_vs_olp == "same", plot_class := "GW same-dir"]
 d[is.na(plot_class), plot_class := "not GW"]
-# chr12 候选方向（final_target_evidence 内 beta 已 harmonize 至表达升高；这里用表内 olp 方向注释）
-chr12_neg <- c("GDF11", "SUOX")     # 表达↑→风险↑ 方向；PheWAS beta 为对表型效应，此处仅用类别不深究符号
 d[, plot_class := factor(plot_class,
                          levels = c("OLP", "GW same-dir", "GW opp-dir", "not GW"))]
 
@@ -50,7 +56,9 @@ pa <- ggplot(d, aes(x = x, y = mlogp)) +
   labs(x = "FinnGen R13 phenotypes with available association (ordered by category)",
        y = expression(-log[10](italic(P))),
        title = "PheWAS: all 5 candidate IVs are pleiotropic across FinnGen R13 phenotypes",
-       subtitle = "dashed line = genome-wide 5e-8; red diamond = OLP endpoint; usable phenotypes per IV: 415/308/392/298/310 (facet order)") +
+       subtitle = paste0("dashed line = genome-wide 5e-8; red diamond = OLP endpoint; ",
+                         "same/opposite are relative to that gene's own OLP effect; ",
+                         "usable phenotypes per IV: 415/308/392/298/310 (facet order)")) +
   theme_journal(8) +
   theme(axis.text.x = element_text(size = 5.5),
         legend.text = element_text(size = 6.5),
@@ -68,8 +76,9 @@ pb <- ggplot(stwide, aes(x = z_exp, y = z_out)) +
   geom_text_repel(data = stwide[is_cand != ""], aes(label = is_cand), size = 2.6, seed = 1, colour = "#C8102E") +
   scale_colour_manual(values = c(`TRUE` = "#9AA5B1", `FALSE` = "#C8102E"), guide = "none") +
   labs(x = "eQTLGen cis-eQTL Z (expression)", y = "FinnGen OLP WIDE MR Z (outcome)",
-       title = "Steiger direction test: expression \u2192 OLP for all 5 candidates",
-       subtitle = "red = tiered candidate; all pass direction (expression -> outcome)") +
+       title = "Steiger direction test: forward orientation for 4 of 5 candidates",
+       subtitle = paste0("red = tiered candidate; EGFL8 forward but P = 0.082; ",
+                         "GDF11 does not pass in INCLAVO (P = 0.72)")) +
   theme_journal(8)
 
 suppressMessages(library(patchwork))

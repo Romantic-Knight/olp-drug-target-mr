@@ -127,7 +127,8 @@ fig1_E <- e_f2$png_b + labs(tag = "E",
 # labelled point is CSNK2B at the top, EGFL8 just below it). The top-right of the volcano is empty,
 # so the legend moves there, right-justified, and a little smaller.
 fig1_F <- e_f2$vol   + labs(tag = "F") +
-  labs(x = "MR Wald-ratio Z (per-SD expression)") + SAFE_R +
+  labs(x = "MR Wald-ratio Z (per-SD expression)",
+       subtitle = "n = 5,040 genes; + = higher risk\ndashed = Bonferroni (9.9e-06)") + SAFE_R +
   ggplot2::theme(legend.position = "inside",
                  legend.position.inside = c(0.985, 0.975),
                  legend.justification = c(1, 1),
@@ -184,7 +185,8 @@ shrink_text_layers <- function(p, k = 0.60, p_vjust = -0.45) {
 }
 fig2_A <- e_supp$p1 + labs(tag = "A") + tiny_y
 fig2_B <- shrink_text_layers(e_f3a$p) + labs(tag = "B") + tiny_y +
-  labs(subtitle = "single cis-eQTL IV per gene; right column = coloc.susie PP.H4") +
+  labs(subtitle = paste0("single cis-eQTL IV per gene; OR < 1 = higher expression, lower risk; ",
+                         "right column = coloc.susie PP.H4")) +
   ggplot2::theme(plot.margin = ggplot2::margin(6, 16, 16, 6))
 # The two compact panels (B, and the SuSiE-vs-abf scatter) have to share a row, which puts the
 # scatter third in reading order. The letters follow the layout, so the scatter is C and the

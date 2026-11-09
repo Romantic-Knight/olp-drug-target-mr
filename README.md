@@ -5,8 +5,8 @@
 Archived as `v1.0.0` at DOI **10.5281/zenodo.24052533**; the badge above resolves to the latest archived version.
 
 Code accompanying the manuscript *"From germline risk to lesional tissue:
-druggable-genome Mendelian randomization and single-cell profiling nominate
-GDF11 inhibition for oral lichen planus"*.
+druggable-genome Mendelian randomization prioritises GDF11 for oral lichen
+planus"*.
 
 This repository is the analysis code only. No data are redistributed here:
 all inputs are public summary statistics or public single-cell data, listed
@@ -75,7 +75,9 @@ versions are recorded in `env/`.
 
 ## Data
 
-Nothing in this repository downloads or contains participant-level data.
+Nothing in this repository downloads or contains participant-level exposure or
+outcome records. Linkage disequilibrium is estimated from public 1000 Genomes
+Phase 3 reference genotypes.
 
 | input | accession / source |
 |---|---|
@@ -97,8 +99,18 @@ there; the gap is stated rather than papered over).
 ## Reproducing on your own checkout
 
 The scripts were developed in a Windows working copy and were copied here
-**byte for byte**, so they are the exact code that produced the manuscript.
+**byte for byte**, so they are the exact code that produced the manuscript
+(as amended after the allele-alignment correction described under
+"Corrections after first release" at the end of this file).
 Two consequences, both of which need a one-line edit before a run:
+
+0. **deCODE summary statistics need credentials from the environment.** The
+   provider serves its pQTL files from a signed S3 endpoint, so
+   `analysis/scripts/s3_decode.py` reads `DECODE_ACCESS_KEY` and
+   `DECODE_SECRET_KEY` from the environment and exits if either is missing.
+   Request your own credentials from deCODE, export them, and re-run the
+   `05_pqtl` stage. Only the `05_pqtl` stage needs them; nothing else in the
+   repository contacts that endpoint.
 
 1. **A few files hard-code the project root.** Where you see
    `ROOT = r"D:\AI-Wisp-Science\Drug Target MR"` (or a `DEST_DIR`, `FG_DIR`,
@@ -173,6 +185,39 @@ gmx_MMPBSA 1.5.0.3, Ubuntu 22.04.5, NVIDIA driver 560.35.03. R 4.4.2 provided
 `coloc.susie`), `susieR`, `cowplot`, `scales`, `GenomicRanges` and `Rsamtools`.
 The Python analysis used `scanpy`, `anndata`, `scipy`, `pandas`, `numpy`,
 `rdkit`, `liana`, `scrublet` and `python-docx`.
+
+## Corrections after first release
+
+Two defects were found while preparing the submission and are fixed in the
+current code. Both change results, so the archived `v1.0.0` snapshot does not
+reproduce the published figures.
+
+1. **Allele alignment in `analysis/scripts/merge_olp_outcomes.R`.** FinnGen
+   reports `beta` for the ALT allele while the exposure effect is per the eQTLGen
+   effect allele, and the two matching branches applied the wrong body to each
+   case: the ALT case was negated and the REF case kept its sign. Every
+   SNP–outcome coefficient therefore had the wrong sign, and every MR odds ratio
+   was the reciprocal of the correct value. P values, the number of
+   Bonferroni-significant genes (22 in WIDE, 4 in INCLAVO) and the pattern of
+   directional concordance were unaffected, because they depend on the outcome Z
+   statistic only. The same inverted convention appeared in `mr_wald_ratio.R` and
+   `calc_iv_strength_F.py`, where it changed no statistic (minor-allele frequency
+   is `min(p, 1-p)`) but mislabelled the reported effect-allele frequency.
+2. **Non-Benjamini–Hochberg adjustment in `scrna_composition_tnk_gse211630.py`
+   and `scrna_erosion_gse211630.py`.** The step multiplied the sorted P value by
+   `rank/m` instead of `m/rank`, so the stored FDR column was not an adjusted P
+   value; the composition module also used one pooled denominator for both cells
+   of its 2×2 Fisher table instead of each condition's own total.
+
+Smaller fixes in the same set: `run_steiger_test.py` now evaluates the two-sided
+tail with `erfc` (the previous `1 - erf` rounded 31 of 50 P values to exactly
+zero); `journal_fig5.R` classifies PheWAS direction against each gene's own OLP
+effect rather than a global `beta < 0` test; `fig_md_integrated.py` uses the
+sample standard deviation (ddof = 1) for the replicate error bars it labels
+"s.d."; `scrna_mr_backmap_gse211630.py` picks the dominant Oaxaca term across all
+three components, which reclassifies EGFL8 from within-cell-type to the
+interaction term; and the per-gene direction badges in `build_final_sc_fig8.py`
+carry the corrected odds ratios.
 
 ## Contact
 

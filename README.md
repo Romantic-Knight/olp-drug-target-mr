@@ -2,7 +2,11 @@
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24052532.svg)](https://doi.org/10.5281/zenodo.24052532)
 
-Archived as `v1.0.0` at DOI **10.5281/zenodo.24052533**; the badge above resolves to the latest archived version.
+Archived as `v1.0.0` at DOI **10.5281/zenodo.24052533**; the badge above resolves to
+the latest archived version. `v1.0.0` predates the allele-alignment correction
+described under *Corrections after first release* below and does **not** reproduce
+the published figures. Cite the badge (concept DOI) rather than the `v1.0.0`
+version DOI.
 
 Code accompanying the manuscript *"From germline risk to lesional tissue:
 druggable-genome Mendelian randomization prioritises GDF11 for oral lichen
